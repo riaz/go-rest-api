@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/riaz/go-rest-api/internal/db"
+	transportHttp "github.com/riaz/go-rest-api/internal/transport/http"
 )
 
 // Run - is going to be responsible of instantiation
@@ -12,6 +13,7 @@ func Run() error {
 	fmt.Println("Stating up an application")
 
 	db, err := db.NewDatabase()
+
 	if err != nil {
 		fmt.Println("Failed to connect to the database")
 		return err
@@ -23,6 +25,14 @@ func Run() error {
 	}
 
 	fmt.Println("successfully connected and pinged database")
+
+	//cmtService := comment.NewService(db)
+
+	httpHandler := transportHttp.NewHandler(db)
+
+	if err := httpHandler.Serve(); err != nil {
+		return err
+	}
 
 	return nil
 }
