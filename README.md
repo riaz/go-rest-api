@@ -34,6 +34,9 @@
 
     >  \d+ comments; // details schema view of the comments table
 
+### Testing Integration
+
+    > go test -tags=integration ./... -v
 
 
 
